@@ -1,0 +1,29 @@
+{
+  "name": "lpp",
+  "description": "recruitment task",
+  "authors": [
+    {
+      "name": "Łukasz Krawczyk",
+      "email": "lukaszkrawczyklodz@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lpp\\": "src/Lpp/"
+    }
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5",
+    "phpunit/phpunit": "^8.4",
+    "phan/phan": "^2.2",
+    "phpmd/phpmd": "^2.7",
+    "ext-ast": "^1.0"
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}
