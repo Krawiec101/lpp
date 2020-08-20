@@ -2,6 +2,7 @@
 /test/coverage/*
 !/test/coverage/.gitkeep
 .idea/
+.phpunit.result.cache
 
 # OS generated files #
 ######################
