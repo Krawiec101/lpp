@@ -12,14 +12,17 @@ use Lpp\Entity\Item;
 use Lpp\Entity\Price;
 use Lpp\Entity\Brand as BrandEntity;
 use Lpp\Service\Data;
+use Lpp\Service\Validator\Url;
 
 class Brand implements BrandInterface
 {
-    public $dataService;
+    protected $dataService;
+    protected $urlValidator;
 
-    public function __construct(Data $data)
+    public function __construct(Data $data, Url $url)
     {
         $this->dataService = $data;
+        $this->urlValidator = $url;
     }
 
     public function getResultForCollectionId(int $collectionId): array
@@ -43,7 +46,7 @@ class Brand implements BrandInterface
                 $prices[] = new Price($price['description'], $price['priceInEuro'], new \DateTime($price['arrival']), new \DateTime($price['due']));
             }
 
-            if (!$this->validateUrl($row["url"])) {
+            if (!$this->urlValidator->validate($row["url"])) {
                 throw new \InvalidArgumentException(
                     "url is invalid"
                 );
@@ -51,10 +54,5 @@ class Brand implements BrandInterface
             $items[] = new Item($row["name"], $row["url"], $prices);
         }
         return $items;
-    }
-
-    protected function validateUrl(string $url): bool
-    {
-        return (filter_var($url, FILTER_VALIDATE_URL) !== false);
     }
 }

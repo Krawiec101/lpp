@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Lpp\Tests\Service\Brand;
 
-use Lpp\Entity;
 use Lpp\Service\Brand\Brand;
 use Lpp\Service\Data;
+use Lpp\Service\Validator\Url;
 
 use PHPUnit\Framework\TestCase;
 
@@ -14,14 +14,23 @@ class BrandTest extends TestCase
 
     protected $dataService;
     protected $brandService;
+    protected $urlValidator;
+
     public function setUp(): void
     {
         $this->dataService = $this->createMock(Data::class);
-        $this->brandService = new Brand($this->dataService);
+        $this->urlValidator = $this->createMock(Url::class);
+        $this->brandService = new Brand($this->dataService, $this->urlValidator);
     }
 
     public function testGetResultForCollectionId(): void
     {
+        $this->urlValidator
+            ->expects($this->once())
+            ->method('validate')
+            ->with('https://www.valid-url.com/')
+            ->willReturn(true);
+
         $this->dataService
             ->expects($this->once())
             ->method('getDataFromJsonFile')
