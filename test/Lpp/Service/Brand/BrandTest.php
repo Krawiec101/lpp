@@ -6,6 +6,7 @@ namespace Lpp\Tests\Service\Brand;
 use Lpp\Service\Brand\Brand;
 use Lpp\Service\Item\Item;
 use Lpp\Service\Data\Json;
+use Lpp\Service\Order\Unordered;
 
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,8 @@ class BrandTest extends TestCase
     {
         $this->dataService = $this->createMock(Json::class);
         $this->itemService = $this->createMock(Item::class);
-        $this->brandService = new Brand($this->dataService, $this->itemService);
+        $resultOrderService = new Unordered();
+        $this->brandService = new Brand($this->dataService, $this->itemService, $resultOrderService);
     }
 
     public function testGetResultForCollectionId(): void
