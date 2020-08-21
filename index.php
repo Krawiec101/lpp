@@ -6,6 +6,7 @@ use Lpp\Service\Brand\Brand;
 use Lpp\Service\Item\Item;
 use Lpp\Service\Validator\Url;
 use Lpp\Service\Collection;
+use Lpp\Service\Order\Unordered;
 
 try {
     $collectionId = 1315475;
@@ -13,7 +14,8 @@ try {
     $dataService = $dataServiceFactory->createDataSourceForCollectionId($collectionId);
     $urlValidator = new Url();
     $itemService = new Item($dataService, $urlValidator);
-    $brandService = new Brand($dataService, $itemService);
+    $resultOrderService = new Unordered();
+    $brandService = new Brand($dataService, $itemService, $resultOrderService);
     $collection = new Collection($brandService);
     $collection->getBrandsForCollection($collectionId);
 } catch (\Exception $exception) {

@@ -11,17 +11,19 @@ namespace Lpp\Service\Brand;
 use Lpp\Entity\Brand as BrandEntity;
 use Lpp\Service\Data\DataInterface;
 use Lpp\Service\Item\ItemInterface;
+use Lpp\Service\Order\ResultsOrderInterface;
 
 class Brand implements BrandInterface
 {
     protected $dataService;
-    protected $urlValidator;
     protected $itemService;
+    protected $resultsOrder;
 
-    public function __construct(DataInterface $data, ItemInterface $itemService)
+    public function __construct(DataInterface $data, ItemInterface $itemService, ResultsOrderInterface $resultsOrder)
     {
         $this->dataService = $data;
         $this->itemService = $itemService;
+        $this->resultsOrder = $resultsOrder;
     }
 
     public function getResultForCollectionId(int $collectionId): array
@@ -32,6 +34,6 @@ class Brand implements BrandInterface
             $items = $this->itemService->getResultForBrandId($id);
             $brands[] = new BrandEntity($brand["name"], $brand["description"], $items);
         }
-        return $brands;
+        return $this->resultsOrder->reorder($brands);
     }
 }
