@@ -1,21 +1,21 @@
 <?php
 
-namespace Lpp\Service\Brand;
+namespace Lpp\Service\Item;
 
 /**
  * Represents the connection to a specific item store.
  * For the case study we will pretend we have only one item store to make things easier.
  *
  */
-interface BrandInterface
+interface ItemInterface
 {   
     /**
      * This method should read from a datasource (JSON for case study)
      * and should return an unsorted list of brands found in the datasource.
      * 
-     * @param int $collectionId
+     * @param int $brandId
      *
-     * @return Lpp\Entity\Brand[]
+     * @return Lpp\Entity\Item[]
      */
-    public function getResultForCollectionId(int $collectionId): array;
+    public function getResultForBrandId(int $brandId): array;
 }

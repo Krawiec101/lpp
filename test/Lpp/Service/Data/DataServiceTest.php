@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Lpp\Tests\Service;
+namespace Lpp\Tests\Service\Data;
 
-use Lpp\Service\Data;
+use Lpp\Service\Data\Json;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,42 +12,40 @@ use PHPUnit\Framework\TestCase;
 class DataServiceTest extends TestCase
 {
 
-    public function prepareDirectoryPath(): string
+    public function prepareDirectoryPath($file): string
     {
         $dirname = \dirname(__FILE__);
         return $dirname
             . DIRECTORY_SEPARATOR
             . 'JsonTestData'
-            . DIRECTORY_SEPARATOR;
+            . DIRECTORY_SEPARATOR
+            . $file;
     }
 
     public function testGetJsonFileDoesNotExist(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $DataService = new Data($this->prepareDirectoryPath());
-        $DataService->getDataFromJsonFile('not-existing-file');
+        new Json($this->prepareDirectoryPath('not-existing-file'));
     }
 
     public function testGetJsonIncorrectFile(): void
     {
         $this->expectException(\ErrorException::class);
-        $DataService = new Data($this->prepareDirectoryPath());
-        $DataService->getDataFromJsonFile('2.json');
+        new Json($this->prepareDirectoryPath('2.json'));
     }
 
     public function testGetJsonDecodeException(): void
     {
         $this->expectException(\JsonException::class);
-        $DataService = new Data($this->prepareDirectoryPath());
-        $DataService->getDataFromJsonFile('3.json');
+        new Json($this->prepareDirectoryPath('3.json'));
     }
 
     public function testGetJsonFromExistingFile(): void
     {
-        $DataService = new Data($this->prepareDirectoryPath());
-        $data = $DataService->getDataFromJsonFile('1.json');
+        $dataService = new Json($this->prepareDirectoryPath('1.json'));
+        $data = $dataService->getResultForCollectionId(1);
         $this->assertSame(
-            ['key' => 'value'],
+            ['id' => 1],
             $data
         );
     }
