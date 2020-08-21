@@ -8,11 +8,11 @@ namespace Lpp\Service\Item;
  *
  */
 interface ItemInterface
-{   
+{
     /**
      * This method should read from a datasource (JSON for case study)
      * and should return an unsorted list of brands found in the datasource.
-     * 
+     *
      * @param int $brandId
      *
      * @return Lpp\Entity\Item[]

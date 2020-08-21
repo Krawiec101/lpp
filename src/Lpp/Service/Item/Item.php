@@ -35,7 +35,9 @@ class Item implements ItemInterface
         foreach ($rawData as $row) {
             $prices = [];
             foreach ($row["prices"] as $price) {
-                $prices[] = new Price($price['description'], $price['priceInEuro'], new \DateTime($price['arrival']), new \DateTime($price['due']));
+                $arrivalDate = new \DateTime($price['arrival']);
+                $dueDate = new \DateTime($price['due']);
+                $prices[] = new Price($price['description'], $price['priceInEuro'], $arrivalDate, $dueDate);
             }
 
             if (!$this->urlValidator->validate($row["url"])) {

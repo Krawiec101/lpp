@@ -8,11 +8,11 @@ namespace Lpp\Service\Brand;
  *
  */
 interface BrandInterface
-{   
+{
     /**
      * This method should read from a datasource (JSON for case study)
      * and should return an unsorted list of brands found in the datasource.
-     * 
+     *
      * @param int $collectionId
      *
      * @return Lpp\Entity\Brand[]

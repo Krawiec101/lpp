@@ -50,7 +50,6 @@ class Json implements DataInterface
         if (!file_exists($filePath)) {
             throw new \InvalidArgumentException("File doesn't exist.");
         }
-
         return file_get_contents($filePath);
     }
 
@@ -59,9 +58,7 @@ class Json implements DataInterface
         if (!$json) {
             throw new \ErrorException("Unable to get data from json file.");
         }
-
         return json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
-
     }
 
     protected function checkOutput($data)

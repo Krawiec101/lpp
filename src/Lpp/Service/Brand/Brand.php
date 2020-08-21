@@ -12,7 +12,6 @@ use Lpp\Entity\Brand as BrandEntity;
 use Lpp\Service\Data\DataInterface;
 use Lpp\Service\Item\ItemInterface;
 
-
 class Brand implements BrandInterface
 {
     protected $dataService;
@@ -35,5 +34,4 @@ class Brand implements BrandInterface
         }
         return $brands;
     }
-
 }
