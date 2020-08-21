@@ -1,13 +1,13 @@
 <?php
 
-namespace Lpp\Service;
+namespace Lpp\Service\Brand;
 
 /**
  * Represents the connection to a specific item store.
  * For the case study we will pretend we have only one item store to make things easier.
  *
  */
-interface ItemServiceInterface
+interface BrandInterface
 {   
     /**
      * This method should read from a datasource (JSON for case study)

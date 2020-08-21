@@ -3,10 +3,18 @@ declare(strict_types=1);
 
 namespace Lpp\Service;
 
-class DataService
+class Data
 {
-    public function getDataFromJsonFile(string $filePath): array
+    private $fileDirectory;
+
+    public function __construct(string $fileDirectory)
     {
+        $this->fileDirectory = $fileDirectory;
+    }
+
+    public function getDataFromJsonFile(string $file): array
+    {
+        $filePath = $this->fileDirectory . "/" . $file;
         $json = $this->getDataFromFile($filePath);
         $data = $this->convertJsonToArray($json);
         $this->checkOutput($data);

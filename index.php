@@ -1,12 +1,13 @@
 <?php
 require_once('vendor/autoload.php');
 
-use Lpp\Service\DataService;
+use Lpp\Service\Data;
+use Lpp\Service\Brand\Brand;
 
-$jsonFileLocation = "./data/1315475.json";
 try {
-    $dataService = new DataService();
-    $jsonData = $dataService->getDataFromJsonFile($jsonFileLocation);
+    $dataService = new Data("./data");
+    $brandService = new Brand($dataService);
+    $brandData = $brandService->getResultForCollectionId(1315475);
 } catch (\Exception $exception) {
     echo $exception->getMessage();
 }

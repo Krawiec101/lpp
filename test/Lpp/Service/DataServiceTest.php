@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lpp\Tests\Service;
 
-use Lpp\Service\DataService;
+use Lpp\Service\Data;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,45 +12,40 @@ use PHPUnit\Framework\TestCase;
 class DataServiceTest extends TestCase
 {
 
-    public function prepareFilePath(string $file): string
+    public function prepareDirectoryPath(): string
     {
         $dirname = \dirname(__FILE__);
         return $dirname
             . DIRECTORY_SEPARATOR
             . 'JsonTestData'
-            . DIRECTORY_SEPARATOR
-            . $file;
+            . DIRECTORY_SEPARATOR;
     }
 
     public function testGetJsonFileDoesNotExist(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $DataService = new DataService();
+        $DataService = new Data($this->prepareDirectoryPath());
         $DataService->getDataFromJsonFile('not-existing-file');
     }
 
     public function testGetJsonIncorrectFile(): void
     {
         $this->expectException(\ErrorException::class);
-        $DataService = new DataService();
-        $filename = $this->prepareFilePath('2.json');
-        $DataService->getDataFromJsonFile($filename);
+        $DataService = new Data($this->prepareDirectoryPath());
+        $DataService->getDataFromJsonFile('2.json');
     }
 
     public function testGetJsonDecodeException(): void
     {
         $this->expectException(\JsonException::class);
-        $DataService = new DataService();
-        $filename = $this->prepareFilePath('3.json');
-        $DataService->getDataFromJsonFile($filename);
+        $DataService = new Data($this->prepareDirectoryPath());
+        $DataService->getDataFromJsonFile('3.json');
     }
 
     public function testGetJsonFromExistingFile(): void
     {
-        $DataService = new DataService();
-
-        $filename = $this->prepareFilePath('1.json');
-        $data = $DataService->getDataFromJsonFile($filename);
+        $DataService = new Data($this->prepareDirectoryPath());
+        $data = $DataService->getDataFromJsonFile('1.json');
         $this->assertSame(
             ['key' => 'value'],
             $data
